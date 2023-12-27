@@ -166,6 +166,7 @@ func pullRepo() {
 	command := exec.Command("git", "clone", repo, abs)
 
 	buf := new(bytes.Buffer)
+	command.Stdout = buf
 	command.Stderr = buf
 
 	err = command.Run()
@@ -184,6 +185,7 @@ func pnpmInstall() {
 	command.Dir = repoLocation
 
 	buf := new(bytes.Buffer)
+	command.Stdout = buf
 	command.Stderr = buf
 
 	err := command.Run()
@@ -322,6 +324,7 @@ func pnpmTest() {
 	command.Dir = repoLocation
 
 	buf := new(bytes.Buffer)
+	command.Stdout = buf
 	command.Stderr = buf
 
 	/* err := */
@@ -350,6 +353,7 @@ func pnpmBuild() {
 	command.Dir = repoLocation
 
 	buf := new(bytes.Buffer)
+	command.Stdout = buf
 	command.Stderr = buf
 
 	err := command.Run()
@@ -384,6 +388,7 @@ func injecc() {
 	command.Dir = repoLocation
 
 	buf := new(bytes.Buffer)
+	command.Stdout = buf
 	command.Stderr = buf
 
 	err := command.Run()
