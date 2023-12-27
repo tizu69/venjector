@@ -16,7 +16,7 @@ const settings = definePluginSettings({
 		type: OptionType.STRING,
 		description: "Where to find Venjector",
 		hidden: true,
-		default: "/home/tizu/go/bin/venjector",
+		default: "$VENJECTOR-SELFPATH",
 	},
 	visualize: {
 		type: OptionType.BOOLEAN,
