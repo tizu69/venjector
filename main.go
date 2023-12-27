@@ -36,10 +36,11 @@ import (
 var core embed.FS
 
 var cli struct {
-	LocalData  bool `help:"Do not use app data directory" default:"false"`
-	AutoChoice int  `help:"Which user choice to make" default:"-1"`
-	Visual     bool `help:"Visualize the progress" default:"false"`
-	Tipless    bool `help:"No tips" default:"false"`
+	LocalData   bool `help:"Do not use app data directory" default:"false"`
+	AutoChoice  int  `help:"Which user choice to make" default:"-1"`
+	Visual      bool `help:"Visualize the progress" default:"false"`
+	Tipless     bool `help:"No tips" default:"false"`
+	TrustSystem bool `help:"Do not check if runtime dependencies are installed" default:"false"`
 }
 var progress zenity.ProgressDialog
 var process = 0
@@ -54,12 +55,14 @@ func main() {
 	err := clipboard.Init()
 	fatalIfError("Failed to initialize clipboard", err)
 
-	newProgress(2)
-	setVal(1, "Looking for PNPM", ensurePnpm)
-	setVal(2, "Looking for Git", ensureGit)
+	if !cli.TrustSystem {
+		newProgress(2)
+		setVal(1, "Looking for PNPM", ensurePnpm)
+		setVal(2, "Looking for Git", ensureGit)
 
-	progress.Text("Welcome to Venjector!")
-	time.Sleep(1 * time.Second) // This delay is unnecessary, but here to make the message readable
+		progress.Text("Welcome to Venjector!")
+		time.Sleep(1 * time.Second) // This delay is unnecessary, but here to make the message readable
+	}
 
 	if cli.LocalData {
 		d, err := zenity.Entry("Please enter your local data directory", zenity.EntryText(getConfigPath()))
